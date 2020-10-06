@@ -1,9 +1,10 @@
 .Header {
   align-items: center;
-  justify-content: space-between;
   display: flex;
-  max-width: 1080px;
+  justify-content: space-between;
   margin: 0 auto; 
+  max-width: 1080px;
+  padding: 0 25px;
 }
 
 .Header nav a {
@@ -22,4 +23,5 @@
 .Home {
   margin: 0 auto;
   max-width: 1080px;
+  padding: 0 25px;
 }
