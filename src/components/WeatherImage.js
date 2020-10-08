@@ -22,6 +22,7 @@ function WeatherImage({ weatherType }) {
     case "few clouds":
     case "broken clouds":
     case "scattered clouds":
+    case "moderate rain":
       return <FontAwesomeIcon icon={faCloud} />;
     default:
       return <></>;

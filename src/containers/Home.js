@@ -17,7 +17,7 @@ function Home() {
     axios
       // Get request from an address
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherKey}`
       )
       .then(function (response) {
         // handle success
@@ -43,7 +43,9 @@ function Home() {
   // This is a succinct way to declare lots of variables, whose values reference values in the received object from our API
   const {
     cloudiness,
+    cloudinessValue,
     currentTemp,
+    currentTempValue,
     highTemp,
     humidity,
     lowTemp,
@@ -51,7 +53,9 @@ function Home() {
     windSpeed,
   } = useMemo(() => {
     let cloudiness = "";
+    let cloudinessValue = 0;
     let currentTemp = "";
+    let currentTempValue = 0;
     let highTemp = "";
     let humidity = "";
     let lowTemp = "";
@@ -60,10 +64,12 @@ function Home() {
 
     if (weatherData) {
       cloudiness = weatherData.clouds.all + "%";
-      currentTemp = weatherData.main.temp;
-      highTemp = weatherData.main.temp_max;
+      cloudinessValue = weatherData.clouds.all;
+      currentTemp = Math.round(weatherData.main.temp) + "°C";
+      currentTempValue = Math.round(weatherData.main.temp);
+      highTemp = Math.round(weatherData.main.temp_max) + "°C";
       humidity = weatherData.main.humidity + "%";
-      lowTemp = weatherData.main.temp_min;
+      lowTemp = Math.round(weatherData.main.temp_min) + "°C";
       weatherType = weatherData.weather[0].description;
       windSpeed = weatherData.wind.speed + " km/h";
     }
@@ -71,7 +77,9 @@ function Home() {
     // returning an object of values
     return {
       cloudiness,
+      cloudinessValue,
       currentTemp,
+      currentTempValue,
       highTemp,
       humidity,
       lowTemp,
@@ -80,33 +88,52 @@ function Home() {
     };
   }, [weatherData]);
 
-  /* Display:
-        Weather Type
-        Current Temp
-        High Temp
-        Low Temp
-        Cloudiness
-        Humidity
-        Wind Speed
-    */
-
   console.log("Weather Data", weatherData);
+  console.log("Current Temp", currentTemp);
 
   return (
     <div>
-      <Header />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+      ></link>
+      <div className="HeaderWrapper">
+        <Header />
+      </div>
+
       <main className="Home">
         <h2>
           Weather in <span>{city}</span>
         </h2>
-        <div className="WeatherInfo">
-          <div className="WeatherInfo_Basic">
+        <div
+          className="WeatherInfo"
+          style={{
+            backgroundColor: `rgba(${currentTempValue * 10}, 0, ${
+              255 - currentTempValue * 10
+            }, 0.2)`,
+          }}
+        >
+          <div
+            className="WeatherInfo_Basic"
+            style={{
+              backgroundColor: `hsl(44, 20%, ${100 - cloudinessValue / 3}%)`,
+            }}
+          >
             <div className="WeatherInfo_Image">
               <WeatherImage weatherType={weatherType} />
             </div>
             <p className="WeatherInfo_Type">{weatherType}</p>
             <h3 className="Label">Current Temperature:</h3>
-            <p className="WeatherInfo_Temperature">{currentTemp}</p>
+            <p
+              className="WeatherInfo_Temperature"
+              style={{
+                color: `rgba(${currentTempValue * 10}, 0, ${
+                  255 - currentTempValue * 10
+                }, 0.5)`,
+              }}
+            >
+              {currentTemp}
+            </p>
           </div>
           <div className="WeatherInfo_Extra">
             <div className="WeatherInfo_Extra_Column">

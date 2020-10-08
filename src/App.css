@@ -1,10 +1,23 @@
+body {
+  background-color: #fffaeb;
+  font-family: "Poppins", sans-serif;
+}
+
 .Header {
   align-items: center;
+
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 0 auto 0;
   max-width: 1080px;
   padding: 0 25px;
+}
+
+.HeaderWrapper {
+  box-shadow: 0px 5px 10px #888888;
+  background-color: #fff5d9;
+  width: 100%;
 }
 
 .Header nav a {
@@ -15,7 +28,7 @@
 }
 
 .Header nav a:hover {
-  color: green;
+  color: #916b00;
 }
 
 /*---- Home Styling ----*/
@@ -28,20 +41,23 @@
 
 .Home h2 {
   font-size: 48px;
-  font-weight: normal;
+  font-weight: 500;
 }
 
 .Home h2 span {
-  color: magenta;
+  font-style: italic;
 }
 
 .WeatherInfo {
+  border-radius: 10px;
+  box-shadow: 2px 2px 15px #888888;
   display: flex;
   justify-content: space-between;
 }
 
 .WeatherInfo_Basic {
-  border: 2px solid black;
+  margin: 10px;
+  border-radius: 10px;
   flex-basis: 30%;
   padding: 20px;
   text-align: center;
@@ -54,8 +70,6 @@
 }
 
 .WeatherInfo_Extra {
-  border: 2px solid black;
-  border-left: 0px;
   display: flex;
   flex-basis: 70%;
   padding: 20px;
@@ -71,6 +85,7 @@
 }
 
 .Label {
+  color: black;
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -86,4 +101,31 @@
   font-size: 48px;
   margin: 0;
   margin-bottom: 30px;
+}
+
+@media screen and (max-width: 640px) {
+  .Header {
+    flex-direction: column;
+  }
+  .HeaderWrapper {
+    height: 150px;
+  }
+  .Home h2 {
+    font-size: 30px;
+  }
+  .Header nav {
+  }
+  .Header nav a {
+    font-size: 15px;
+  }
+  .WeatherInfo {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  .WeatherInfo_Extra {
+    padding-bottom: 0px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
